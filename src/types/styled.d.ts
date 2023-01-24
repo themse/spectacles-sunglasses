@@ -1,10 +1,16 @@
 import 'styled-components';
 
+import { FontFace } from 'styles/types';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     screens: {
-      mobile: string;
-      desktop: string;
+      xxs: string;
+      sm: string;
+      md: string;
+      lg: string;
+      xl: string;
+      xxl: string;
     };
 
     colors: Record<string, string>;
@@ -14,6 +20,11 @@ declare module 'styled-components' {
       md: string;
       lg: string;
       xl: string;
+    };
+
+    fontFace: {
+      primary: FontFace;
+      heading: FontFace;
     };
   }
 }
