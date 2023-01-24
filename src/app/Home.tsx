@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { BaseLayout } from 'app/components/layouts/BaseLayout';
+
 export const Home: FC = () => {
-  return <div>Home Page</div>;
+  return <BaseLayout>Home Page</BaseLayout>;
 };
