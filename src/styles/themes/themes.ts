@@ -14,7 +14,11 @@ export const defaultTheme: DefaultTheme = {
     xxl: '1830px',
   },
 
-  colors: {},
+  colors: {
+    white: '#FFFFFF',
+    dark: '#171717',
+    blue: '#223E98',
+  },
 
   fontSize: {
     sm: pxToRem(12),
