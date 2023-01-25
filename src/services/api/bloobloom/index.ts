@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { CollectionResponse, GlassResponse, FilterCriteria } from './types';
 
-const BASE_URL = 'https://staging-api.bloobloom.com'; // TODO get from env
+const defaultUrl = 'https://staging-api.bloobloom.com';
+const BASE_URL = process.env.REACT_APP_API_BLOOBLOOM_URL ?? defaultUrl;
+
 const COLLECTION_PATH = '/user/v1/sales_channels/website/collections';
 const FULL_COLLECTION_PATH = `${BASE_URL}${COLLECTION_PATH}`;
 
