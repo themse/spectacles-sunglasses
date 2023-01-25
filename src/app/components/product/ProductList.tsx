@@ -28,6 +28,14 @@ export const ProductList: FC = () => {
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  @media screen and (max-width: ${(props): string => props.theme.screens.md}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: ${(props): string => props.theme.screens.sm}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const GridCell = styled.div`
@@ -36,6 +44,24 @@ const GridCell = styled.div`
 
   &:nth-child(3n) {
     border-right: none;
+  }
+
+  @media screen and (max-width: ${(props): string => props.theme.screens.md}) {
+    &:nth-child(3n) {
+      border-right: 1px solid ${(props): string => props.theme.colors.dark};
+    }
+
+    &:nth-child(2n) {
+      border-right: none;
+    }
+  }
+
+  @media screen and (max-width: ${(props): string => props.theme.screens.sm}) {
+    border-right: none;
+
+    &:nth-child(3n) {
+      border-right: none;
+    }
   }
 `;
 
