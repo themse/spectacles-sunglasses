@@ -3,22 +3,23 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ProductCard } from './ProductCard';
-import { data } from 'app/mocks/data'; // TODO get from API
+import { GlassItem } from 'hooks/useGlassList';
 
-const category = 'spectacles-women'; // TODO get from url
+type Props = {
+  salesCategory: string;
 
-export const ProductList: FC = () => {
+  glassList?: GlassItem[] | null;
+};
+
+export const ProductList: FC<Props> = ({ salesCategory, glassList }) => {
   return (
     <Grid>
-      {data?.glasses.map((glassItem) => (
+      {glassList?.map((glassItem) => (
         <GridCell key={glassItem.id}>
           <ProductCardLink
-            to={`/collections/${category}/glasses/${glassItem.configuration_name}/${glassItem.glass_variants[0].frame_variant.configuration_name}`}
+            to={`/collections/${salesCategory}/glasses/${glassItem.category}/${glassItem.variant}`}
           >
-            <ProductCard
-              name={glassItem.name}
-              imgSrc={glassItem.glass_variants[0].media[0].url}
-            />
+            <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
           </ProductCardLink>
         </GridCell>
       ))}

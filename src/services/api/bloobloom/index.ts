@@ -19,15 +19,15 @@ export const getCollection = async (
 
 export const getGlasses = async (
   controller: AbortController,
+  salesCategory: string,
   criteria: FilterCriteria
 ): Promise<GlassResponse> => {
-  const { category, ...restParams } = criteria;
-  const url = `${FULL_COLLECTION_PATH}/${category}/glasses`;
+  const url = `${FULL_COLLECTION_PATH}/${salesCategory}/glasses`;
 
   const { data } = await axios.get<GlassResponse>(url, {
     signal: controller.signal,
 
-    params: restParams,
+    params: criteria,
   });
 
   return data;

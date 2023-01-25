@@ -16,7 +16,7 @@ type Media = {
   position: number;
 };
 
-type GlassItem = {
+export type GlassItem = {
   id: number;
   name: string;
   configuration_name: string;
@@ -48,8 +48,14 @@ export type GlassResponse = {
   meta: MetaData;
 };
 
-export type FilterCriteria = {
-  category: string;
+// TODO improve keys
+export type FilterCriteria = Partial<{
   'page[limit]': number;
-  // TODO add more
-};
+  'page[number]': number;
+  'sort[type]': string;
+  width: number;
+  'sort[order]': string;
+  'filters[lens_variant_prescriptions][]': string;
+  'filters[lens_variant_types][]': string;
+  'filters[frame_variant_home_trial_available]': boolean;
+}>;
