@@ -17,6 +17,12 @@ export const GlobalStyle = styled.createGlobalStyle`
   body {
     margin: 0;
     font-size: 1rem;
-    color: #171717; // theme's color: dark
+    font-family: 'EB Garamond', sans-serif;
+    color: #171717;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 `;

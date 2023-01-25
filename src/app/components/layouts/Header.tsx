@@ -21,6 +21,7 @@ export const Header: FC<Props> = ({}) => {
           </LogoLink>
         </TopHeaderWrapper>
       </ContainerFluid>
+
       <NavBar category={category} />
     </Wrapper>
   );
