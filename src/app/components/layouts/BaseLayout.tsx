@@ -1,8 +1,7 @@
 import { FC, ReactNode } from 'react';
+import styled from 'styled-components';
 
-import { StyledWrapper } from './StyledWrapper';
 import { Header } from './Header';
-import { StyledMain } from './StyledMain';
 
 type Props = {
   children: ReactNode;
@@ -10,9 +9,21 @@ type Props = {
 
 export const BaseLayout: FC<Props> = ({ children }) => {
   return (
-    <StyledWrapper>
+    <Wrapper>
       <Header />
-      <StyledMain>{children}</StyledMain>
-    </StyledWrapper>
+      <Main>{children}</Main>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  min-width: ${({ theme }): string => theme.screens.xxs};
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+
+const Main = styled.main`
+  flex-grow: 1;
+`;

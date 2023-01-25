@@ -22,9 +22,9 @@ const StyledLabel = styled.span`
   text-transform: uppercase;
 `;
 
-const StyledBtn = styled.button.attrs(() => ({
+const StyledBtn = styled.button.attrs({
   type: 'button',
-}))`
+})`
   ${btnAsLink}
   padding: ${pxToRem(10)} ${pxToRem(5)};
 `;

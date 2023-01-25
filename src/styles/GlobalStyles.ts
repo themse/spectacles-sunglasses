@@ -12,6 +12,7 @@ export const GlobalStyle = styled.createGlobalStyle`
   *::before,
   *::after {
     box-sizing: inherit;
+    outline-color: #223e98;
   }
 
   body {
