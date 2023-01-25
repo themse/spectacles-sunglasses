@@ -45,15 +45,44 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
+  @media screen and (max-width: ${(props): string => props.theme.screens.sm}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   ${GridCell} {
     grid-area: 1 / 2 / 2 / 3;
 
+    @media screen and (max-width: ${(props): string =>
+        props.theme.screens.sm}) {
+      grid-area: auto;
+    }
+
     border-left: 1px solid ${(props): string => props.theme.colors.dark};
     border-right: 1px solid ${(props): string => props.theme.colors.dark};
+
+    @media screen and (max-width: ${(props): string =>
+        props.theme.screens.sm}) {
+      border-left: none;
+    }
+
+    @media screen and (max-width: 500px) {
+      border-right: none;
+
+      border-bottom: 1px solid ${(props): string => props.theme.colors.dark};
+    }
   }
 
   ${GridCell} + ${GridCell} {
     grid-area: 1 / 3 / 2 / 4;
+
+    @media screen and (max-width: ${(props): string =>
+        props.theme.screens.sm}) {
+      grid-area: auto;
+    }
 
     border: none;
   }

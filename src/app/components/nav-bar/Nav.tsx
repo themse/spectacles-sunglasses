@@ -38,6 +38,10 @@ const NavList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
+  @media screen and (max-width: ${(props): string => props.theme.screens.lg}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   list-style: none;
   padding: 0;
   margin: 0;
@@ -46,6 +50,13 @@ const NavList = styled.ul`
 
 const NavItem = styled.li`
   border-right: 1px solid ${(props): string => props.theme.colors.dark};
+
+  @media screen and (max-width: ${(props): string => props.theme.screens.lg}) {
+    &:nth-child(2n) {
+      border-right: none;
+    }
+  }
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,6 +65,7 @@ const NavItem = styled.li`
 const NavLink = styled.a``;
 
 const NavLabel = styled.span`
+  display: block;
   padding: ${pxToRem(15)};
   text-transform: uppercase;
 `;
