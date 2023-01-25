@@ -1,4 +1,4 @@
-type CollectionItem = {
+export type CollectionItem = {
   id: number;
   name: string;
   configuration_name: string;
