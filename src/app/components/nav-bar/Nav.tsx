@@ -47,6 +47,7 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   border-right: 1px solid ${(props): string => props.theme.colors.dark};
   display: flex;
+  justify-content: center;
   align-items: center;
 `;
 

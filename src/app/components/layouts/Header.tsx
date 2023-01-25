@@ -16,9 +16,12 @@ export const Header: FC<Props> = ({}) => {
       <ContainerFluid>
         <TopHeaderWrapper>
           <SideMenu />
-          <LogoLink href="/">
-            <Logo src="/logo.jpg" alt="Spectacles" />
-          </LogoLink>
+          <Brand>
+            <LogoLink href="/">
+              <Logo src="/logo.jpg" alt="Spectacles" />
+              <HiddenBrandLabel>Spectacles</HiddenBrandLabel>
+            </LogoLink>
+          </Brand>
         </TopHeaderWrapper>
       </ContainerFluid>
 
@@ -29,6 +32,12 @@ export const Header: FC<Props> = ({}) => {
 
 const Wrapper = styled.header``;
 
+const Brand = styled.h1``;
+
+const HiddenBrandLabel = styled.span`
+  display: none;
+`;
+
 const LogoLink = styled.a``;
 
 const TopHeaderWrapper = styled.div`
@@ -36,7 +45,7 @@ const TopHeaderWrapper = styled.div`
   align-items: center;
   min-height: 60px;
 
-  ${LogoLink} {
+  ${Brand} {
     margin: auto;
   }
 

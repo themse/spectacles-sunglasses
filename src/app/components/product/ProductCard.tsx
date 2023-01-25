@@ -8,7 +8,7 @@ type Props = {
   imgSrc: string;
 };
 
-export const ProductItem: FC<Props> = ({ name, imgSrc }) => {
+export const ProductCard: FC<Props> = ({ name, imgSrc }) => {
   return (
     <Wrapper>
       <ProductTitle>{name}</ProductTitle>
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const ProductTitle = styled.h2`
+const ProductTitle = styled.h3`
   position: absolute;
   top: 0;
   left: 0;
@@ -30,6 +30,7 @@ const ProductTitle = styled.h2`
   text-align: center;
   text-transform: uppercase;
   margin: ${pxToRem(25)} 0;
+  font-size: ${(props): string => props.theme.fontSize.lg};
 `;
 
 const ProductPreview = styled.img`

@@ -59,9 +59,9 @@ const Grid = styled.div`
   }
 `;
 
-const CategoryTitle = styled.h1`
+const CategoryTitle = styled.h2`
   ${(props): FontFace => props.theme.fontFace.heading}
-  font-size: ${pxToRem(20)};
+  font-size: ${(props): string => props.theme.fontSize.xl};
   text-align: center;
   text-transform: uppercase;
   padding: ${pxToRem(5)};

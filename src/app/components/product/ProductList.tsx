@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { ProductItem } from './ProductItem';
+import { ProductCard } from './ProductCard';
 import { data } from 'app/mocks/data'; // TODO get from API
 
 const category = 'spectacles-women'; // TODO get from url
@@ -11,14 +11,14 @@ export const ProductList: FC = () => {
     <Grid>
       {data?.glasses.map((glassItem) => (
         <GridCell key={glassItem.id}>
-          <ProductItemLink
+          <ProductCardLink
             href={`/collections/${category}/glasses/${glassItem.configuration_name}/${glassItem.glass_variants[0].frame_variant.configuration_name}`}
           >
-            <ProductItem
+            <ProductCard
               name={glassItem.name}
               imgSrc={glassItem.glass_variants[0].media[0].url}
             />
-          </ProductItemLink>
+          </ProductCardLink>
         </GridCell>
       ))}
     </Grid>
@@ -39,6 +39,6 @@ const GridCell = styled.div`
   }
 `;
 
-const ProductItemLink = styled.a`
+const ProductCardLink = styled.a`
   cursor: pointer;
 `;
