@@ -11,6 +11,7 @@ export const ArrowRight: FC<Props> = () => {
       height="24"
       fill="currentColor"
     >
+      <title>Arrow right</title>
       <path fill="none" d="M0 0h24v24H0z" />
       <path d="M16 12l-6 6V6z" />
     </svg>
