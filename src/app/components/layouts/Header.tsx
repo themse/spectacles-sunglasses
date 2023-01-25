@@ -2,34 +2,46 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import { ContainerFluid } from 'components/grid/ContainerFluid';
-import { FontFace } from 'styles/types';
-import { Row } from 'components/grid/Row';
+import { Logo } from '../Logo';
+import { SideMenu } from '../side-menu/SideMenu';
+import { NavBar } from '../nav-bar/NavBar';
 
-export const Header: FC = () => {
+type Props = {};
+
+export const Header: FC<Props> = ({}) => {
+  const category = 'Spectacles women'; // TODO
+
   return (
-    <>
+    <Wrapper>
       <ContainerFluid>
-        <MenuLabel>Menu</MenuLabel>
-        <Heading>Spectacles women</Heading>
+        <TopHeaderWrapper>
+          <SideMenu />
+          <LogoLink href="/">
+            <Logo src="/logo.jpg" alt="Spectacles" />
+          </LogoLink>
+        </TopHeaderWrapper>
       </ContainerFluid>
-      <ContainerFluid>
-        <Row>
-          <div style={{ backgroundColor: 'red' }}>
-            <p>hello</p>
-          </div>
-        </Row>
-      </ContainerFluid>
-    </>
+      <NavBar category={category} />
+    </Wrapper>
   );
 };
 
-const Heading = styled.h1`
-  ${({ theme }): FontFace => theme.fontFace.heading}
+const Wrapper = styled.header``;
 
-  text-transform: uppercase;
-`;
+const LogoLink = styled.a``;
 
-const MenuLabel = styled.p`
-  ${({ theme }): FontFace => theme.fontFace.primary}
-  text-transform: uppercase;
+const TopHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+
+  ${LogoLink} {
+    margin: auto;
+  }
+
+  button {
+    width: 60px;
+    transform: translateX(60px);
+    margin-left: -60px;
+  }
 `;
