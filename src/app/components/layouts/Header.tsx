@@ -1,31 +1,25 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { ContainerFluid } from 'components/grid/ContainerFluid';
 import { Logo } from '../Logo';
 import { SideMenu } from '../side-menu/SideMenu';
-import { NavBar } from '../nav-bar/NavBar';
 
-type Props = {};
-
-export const Header: FC<Props> = ({}) => {
-  const category = 'Spectacles women'; // TODO
-
+export const Header: FC = () => {
   return (
     <Wrapper>
       <ContainerFluid>
         <TopHeaderWrapper>
           <SideMenu />
           <Brand>
-            <LogoLink href="/">
-              <Logo src="/logo.jpg" alt="Spectacles" />
-              <HiddenBrandLabel>Spectacles</HiddenBrandLabel>
-            </LogoLink>
+            <Link to="/">
+              <Logo src="/logo.jpg" alt="Glasses Store" />
+              <HiddenBrandLabel>Glasses Store</HiddenBrandLabel>
+            </Link>
           </Brand>
         </TopHeaderWrapper>
       </ContainerFluid>
-
-      <NavBar category={category} />
     </Wrapper>
   );
 };
@@ -37,8 +31,6 @@ const Brand = styled.h1``;
 const HiddenBrandLabel = styled.span`
   display: none;
 `;
-
-const LogoLink = styled.a``;
 
 const TopHeaderWrapper = styled.div`
   display: flex;

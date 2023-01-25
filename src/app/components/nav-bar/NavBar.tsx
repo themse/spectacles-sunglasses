@@ -9,16 +9,19 @@ import { Nav } from './Nav';
 
 type Props = {
   category: string;
+  sex: string;
 };
 
-export const NavBar: FC<Props> = ({ category }) => {
+export const NavBar: FC<Props> = ({ category, sex }) => {
+  const title = [category, sex].filter(Boolean).join(' ');
+
   return (
     <Wrapper>
       <ContainerFluid>
         <Row>
           <Grid>
             <GridCell>
-              <CategoryTitle>{category}</CategoryTitle>
+              <Title>{title}</Title>
             </GridCell>
             <GridCell>
               <Nav />
@@ -88,7 +91,7 @@ const Grid = styled.div`
   }
 `;
 
-const CategoryTitle = styled.h2`
+const Title = styled.h2`
   ${(props): FontFace => props.theme.fontFace.heading}
   font-size: ${(props): string => props.theme.fontSize.xl};
   text-align: center;

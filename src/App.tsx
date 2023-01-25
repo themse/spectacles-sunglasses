@@ -3,7 +3,7 @@ import WebFont from 'webfontloader';
 
 import { GlobalStyle } from 'styles/GlobalStyles';
 import { ThemeProvider } from 'styles/themes/ThemeProvider';
-import { Home as HomePage } from 'app/Home';
+import { AppRoutes } from 'AppRoutes';
 
 const App: FC = () => {
   useEffect(() => {
@@ -18,7 +18,7 @@ const App: FC = () => {
     <>
       <GlobalStyle />
       <ThemeProvider>
-        <HomePage />
+        <AppRoutes />
       </ThemeProvider>
     </>
   );

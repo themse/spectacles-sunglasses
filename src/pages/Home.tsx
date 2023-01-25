@@ -1,12 +1,14 @@
 import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { BaseLayout } from 'app/components/layouts/BaseLayout';
-import { ProductList } from 'app/components/product/ProductList';
 
-export const Home: FC = () => {
+const HomePage: FC = () => {
   return (
     <BaseLayout>
-      <ProductList />
+      <Outlet />
     </BaseLayout>
   );
 };
+
+export default HomePage;
