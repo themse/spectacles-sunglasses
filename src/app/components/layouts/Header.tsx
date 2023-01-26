@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 import { ContainerFluid } from 'components/grid/ContainerFluid';
 import { Logo } from '../Logo';
-import { SideMenu } from '../side-menu/SideMenu';
+import { SidebarMenu } from '../SidebarMenu';
 
 export const Header: FC = () => {
   return (
     <Wrapper>
       <ContainerFluid>
         <TopHeaderWrapper>
-          <SideMenu />
+          <SidebarMenu />
           <Brand>
             <Link to="/">
               <Logo src="/logo.jpg" alt="Glasses Store" />
@@ -24,7 +24,16 @@ export const Header: FC = () => {
   );
 };
 
-const Wrapper = styled.header``;
+const Wrapper = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 99;
+  border-bottom: 1px solid ${(props): string => props.theme.colors.dark};
+  background-color: ${(props): string => props.theme.colors.white};
+`;
 
 const Brand = styled.h1``;
 
