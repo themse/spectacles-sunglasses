@@ -51,8 +51,9 @@ export const useGlassList = (): DataReturn => {
       controller: AbortController,
       categorySlug: string
     ): Promise<void | never> => {
+      // TODO move infinite scroll into separate file
       const criteria: FilterCriteria = {
-        'page[limit]': 6,
+        'page[limit]': 12,
         'page[number]': 1,
       };
       try {
