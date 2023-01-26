@@ -1,12 +1,19 @@
 import { FC, useState } from 'react';
-
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import { pxToRem } from 'styles/helpers';
 import { btnAsLink } from 'styles/mixins';
 import { FontFace } from 'styles/types';
+import { useSalesCollection } from 'context/sales-collection';
+import { ObjectEntries } from 'types/helpers';
+import { SalesCollectionItem } from 'context/sales-collection/types';
 
+// TODO refactor
 export const SidebarMenu: FC = () => {
   const [showMenu, setShowMenu] = useState(false);
+
+  const { salesCollection } = useSalesCollection();
 
   const onClick = (): void => {
     setShowMenu((prev) => !prev);
@@ -24,47 +31,41 @@ export const SidebarMenu: FC = () => {
       {showMenu && (
         <SidebarWrapper onMouseLeave={onMouseOver}>
           <ParentList>
+            {(
+              Object.entries(salesCollection) as ObjectEntries<{
+                [key: string]: SalesCollectionItem[];
+              }>
+            ).map(([category, collection]) => (
+              <li key={category}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a role="presentation">
+                  <MenuItem>{category}</MenuItem>
+                </a>
+                {collection.length > 0 && (
+                  <ul>
+                    {collection.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          to={`/collections/${item.slug}`}
+                          onClick={onClick}
+                        >
+                          <MenuItem>{item.sex}</MenuItem>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
             <li>
-              <a>
-                <MenuItem>Spectacles</MenuItem>
-              </a>
-              <ul>
-                <li>
-                  <a>
-                    <MenuItem>Women</MenuItem>
-                  </a>
-                </li>
-                <li>
-                  <a>
-                    <MenuItem>Men</MenuItem>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>
-                <MenuItem>Sunglasses</MenuItem>
-              </a>
-              <ul>
-                <li>
-                  <a>
-                    <MenuItem>Women2</MenuItem>
-                  </a>
-                </li>
-                <li>
-                  <a>
-                    <MenuItem>Men2</MenuItem>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a href="#">
                 <MenuItem>Home try on</MenuItem>
               </a>
             </li>
             <li>
-              <a>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a href="#">
                 <MenuItem>Pair for pair</MenuItem>
               </a>
             </li>
@@ -130,14 +131,16 @@ const ParentList = styled.ul`
   border-right: 1px solid ${(props): string => props.theme.colors.dark};
 
   & > li > a {
-    transition: all 5s ease-in-out;
-
     & + ul {
       display: none;
       position: absolute;
       top: 0;
       bottom: 0;
       left: 300px;
+      @media screen and (max-width: 620px) {
+        left: 0;
+      }
+
       width: 300px;
       border-right: 1px solid ${(props): string => props.theme.colors.dark};
 

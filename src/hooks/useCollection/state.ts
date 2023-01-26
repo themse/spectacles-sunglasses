@@ -1,7 +1,7 @@
 export type CollectionItem = {
   id: number;
   name: string;
-  category: string;
+  salesCategory: string;
   sex: string;
   slug: string;
 };
@@ -10,7 +10,7 @@ type State = {
   isLoading: boolean;
   err: string | null;
 
-  collectionList?: CollectionItem[] | null;
+  collection?: { [key: string]: CollectionItem[] } | null;
 };
 
 export const initialState: State = {
@@ -26,7 +26,7 @@ export enum ReducerActionKind {
 
 type ReducerAction = {
   type: ReducerActionKind;
-  payload?: CollectionItem[];
+  payload?: { [key: string]: CollectionItem[] };
   err?: string;
 };
 
@@ -35,7 +35,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.FETCH_COLLECTION_LIST: {
       return {
         ...state,
-        collectionList: null,
+        collection: null,
         err: null,
         isLoading: true,
       };
@@ -43,7 +43,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.SUCCESS_COLLECTION_LIST: {
       return {
         ...state,
-        collectionList: action.payload,
+        collection: action.payload,
 
         err: null,
         isLoading: false,
@@ -52,7 +52,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.FAILED_COLLECTION_LIST: {
       return {
         ...state,
-        collectionList: null,
+        collection: null,
         isLoading: false,
 
         err: action.err ?? 'Something went wrong',

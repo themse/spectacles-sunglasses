@@ -4,7 +4,7 @@ import { SalesCollectionState } from './types';
 import { useCollection } from 'hooks/useCollection';
 
 const initialState: SalesCollectionState = {
-  salesCollectionList: [],
+  salesCollection: {},
   isLoading: false,
 };
 
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const SalesCollectionProvider: FC<Props> = ({ children }) => {
-  const { getCollection, collectionList, isLoading } = useCollection();
+  const { getCollection, collection, isLoading } = useCollection();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -30,7 +30,7 @@ export const SalesCollectionProvider: FC<Props> = ({ children }) => {
   return (
     <SalesCollectionContext.Provider
       value={{
-        salesCollectionList: collectionList ?? [],
+        salesCollection: collection ?? {},
         isLoading,
       }}
     >

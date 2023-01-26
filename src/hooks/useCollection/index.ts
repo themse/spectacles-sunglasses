@@ -13,35 +13,40 @@ import {
 type DataReturn = {
   getCollection: (controller: AbortController) => Promise<void | never>;
 
-  collectionList?: CollectionItem[] | null;
+  collection?: { [key: string]: CollectionItem[] } | null;
   isLoading: boolean;
   err: string | null;
 };
 
 export const useCollection = (): DataReturn => {
-  const [{ collectionList, isLoading, err }, dispatch] = useReducer(
+  const [{ collection, isLoading, err }, dispatch] = useReducer(
     collectionReducer,
     collectionInitialState
   );
 
   const _mapRawDataToCollectionList = (
     rawData: CollectionItemApi[]
-  ): CollectionItem[] => {
+  ): { [key: string]: CollectionItem[] } => {
     return rawData.reduce((acc, item) => {
-      const [category, sex] = item.configuration_name.split('-');
+      const [salesCategory, sex] = item.configuration_name.split('-');
 
       const updatedData: CollectionItem = {
         id: item.id,
         name: item.name,
-        category,
+        salesCategory,
         sex,
         slug: item.configuration_name,
       };
 
-      acc.push(updatedData);
+      if (salesCategory in acc) {
+        acc[salesCategory].push(updatedData);
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        acc[salesCategory] = [updatedData];
+      }
 
       return acc;
-    }, [] as CollectionItem[]);
+    }, {} as { [key: string]: CollectionItem[] });
   };
 
   const getCollection = useCallback(
@@ -50,13 +55,11 @@ export const useCollection = (): DataReturn => {
         dispatch({ type: CollectionReducerActionKind.FETCH_COLLECTION_LIST });
 
         const data = await getCollectionApi(controller);
-        const mappedCollectionList = _mapRawDataToCollectionList(
-          data.collections
-        );
+        const mappedCollection = _mapRawDataToCollectionList(data.collections);
 
         dispatch({
           type: CollectionReducerActionKind.SUCCESS_COLLECTION_LIST,
-          payload: mappedCollectionList,
+          payload: mappedCollection,
         });
       } catch (error) {
         const message = getErrorMessage(error);
@@ -70,5 +73,5 @@ export const useCollection = (): DataReturn => {
     []
   );
 
-  return { collectionList, isLoading, err, getCollection };
+  return { collection, isLoading, err, getCollection };
 };
