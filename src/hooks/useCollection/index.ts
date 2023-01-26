@@ -50,7 +50,7 @@ export const useCollection = (): DataReturn => {
   };
 
   const getCollection = useCallback(
-    async (controller: AbortController): Promise<void | never> => {
+    async (controller?: AbortController): Promise<void | never> => {
       try {
         dispatch({ type: CollectionReducerActionKind.FETCH_COLLECTION_LIST });
 

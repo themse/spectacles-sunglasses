@@ -17,7 +17,7 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
     const controller = new AbortController();
 
     if (categorySlug) {
-      getGlassList(controller, categorySlug);
+      getGlassList(categorySlug, {}, controller);
     }
 
     return () => {

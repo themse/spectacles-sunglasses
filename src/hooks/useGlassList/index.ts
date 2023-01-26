@@ -15,13 +15,16 @@ import { getErrorMessage } from 'services/utils/getErrorMessage';
 
 type DataReturn = {
   getGlassList: (
-    controller: AbortController,
-    categorySlug: string
+    categorySlug: string,
+    filterCriteria?: FilterCriteria,
+
+    controller?: AbortController
   ) => Promise<void | never>;
 
-  glassList?: GlassItem[] | null;
   isLoading: boolean;
   err: string | null;
+
+  glassList?: GlassItem[] | null;
 };
 
 export const useGlassList = (): DataReturn => {
@@ -48,18 +51,24 @@ export const useGlassList = (): DataReturn => {
 
   const getGlassList = useCallback(
     async (
-      controller: AbortController,
-      categorySlug: string
+      categorySlug: string,
+      filterCriteria?: FilterCriteria,
+
+      controller?: AbortController
     ): Promise<void | never> => {
-      // TODO move infinite scroll into separate file
+      const LIMIT = 12;
+      const START_PAGE = 1;
+
       const criteria: FilterCriteria = {
-        'page[limit]': 12,
-        'page[number]': 1,
+        'page[limit]': LIMIT,
+        'page[number]': START_PAGE,
+
+        ...filterCriteria,
       };
       try {
         dispatch({ type: GlassReducerActionKind.FETCH_GLASS_LIST });
 
-        const data = await getGlassListApi(controller, categorySlug, criteria);
+        const data = await getGlassListApi(categorySlug, criteria, controller);
         const mappedGlassList = _mapRawDataToGlassList(data.glasses);
 
         dispatch({
