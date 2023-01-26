@@ -25,7 +25,7 @@ export const AppRoutes: FC = () => {
             element={<Navigate to="collections/spectacles-women" />} // temp solution
           />
           <Route
-            path="collections/:categorySex?"
+            path="collections/:categorySlug?"
             element={
               <Suspense fallback={<Loader />}>
                 <ProductListPage />
@@ -33,7 +33,7 @@ export const AppRoutes: FC = () => {
             }
           />
           <Route
-            path="collections/:categorySex/glasses/:glassType/:glassOption"
+            path="collections/:categorySlug/glasses/:glassType/:glassOption"
             element={
               <Suspense fallback={<Loader />}>
                 <ProductViewPage />

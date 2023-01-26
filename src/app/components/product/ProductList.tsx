@@ -1,29 +1,45 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ProductCard } from './ProductCard';
-import { GlassItem } from 'hooks/useGlassList';
+import { useGlassList } from 'hooks/useGlassList';
+import { Loader } from 'components/Loader';
 
 type Props = {
-  salesCategory: string;
-
-  glassList?: GlassItem[] | null;
+  categorySlug: string;
 };
 
-export const ProductList: FC<Props> = ({ salesCategory, glassList }) => {
+export const ProductList: FC<Props> = ({ categorySlug }) => {
+  const { getGlassList, glassList, isLoading } = useGlassList();
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    if (categorySlug) {
+      getGlassList(controller, categorySlug);
+    }
+
+    return () => {
+      controller.abort();
+    };
+  }, [categorySlug, getGlassList]);
+
   return (
-    <Grid>
-      {glassList?.map((glassItem) => (
-        <GridCell key={glassItem.id}>
-          <ProductCardLink
-            to={`/collections/${salesCategory}/glasses/${glassItem.category}/${glassItem.variant}`}
-          >
-            <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
-          </ProductCardLink>
-        </GridCell>
-      ))}
-    </Grid>
+    <>
+      <Grid>
+        {glassList?.map((glassItem) => (
+          <GridCell key={glassItem.id}>
+            <ProductCardLink
+              to={`/collections/${categorySlug}/glasses/${glassItem.category}/${glassItem.variant}`}
+            >
+              <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
+            </ProductCardLink>
+          </GridCell>
+        ))}
+      </Grid>
+      {isLoading && <Loader />}
+    </>
   );
 };
 

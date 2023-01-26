@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import { ContainerFluid } from 'components/grid/ContainerFluid';
 
+// TODO just for demo
 const ProductViewPage: FC = () => {
-  const params = useParams<'categorySex' | 'glassType' | 'glassOption'>();
+  const params = useParams<'categorySlug' | 'glassType' | 'glassOption'>();
 
   return (
     <ContainerFluid>
