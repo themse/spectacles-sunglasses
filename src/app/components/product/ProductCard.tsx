@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 
 import { pxToRem } from 'styles/helpers';
+import { EmptyPreview } from 'components/EmptyPreview';
 
 type Props = {
   name: string;
@@ -11,7 +12,7 @@ type Props = {
 
 export const ProductCard: FC<Props> = ({ name, imgSrc }) => {
   const { ref, inView } = useInView({
-    threshold: 0,
+    threshold: 0.7,
     triggerOnce: true,
   });
 
@@ -44,13 +45,6 @@ const ProductTitle = styled.h3`
 const ThumbnailPreview = styled.div`
   min-height: 400px;
   height: 100%;
-`;
-
-const EmptyPreview = styled.div`
-  background-color: ${(props): string => props.theme.colors.blue};
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
 `;
 
 const ProductPreview = styled.img`
