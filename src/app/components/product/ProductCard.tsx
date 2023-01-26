@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
 
 import { pxToRem } from 'styles/helpers';
 
@@ -9,10 +10,17 @@ type Props = {
 };
 
 export const ProductCard: FC<Props> = ({ name, imgSrc }) => {
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: true,
+  });
+
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <ProductTitle>{name}</ProductTitle>
-      <ProductPreview src={imgSrc} alt={name} />
+      <ThumbnailPreview>
+        {inView ? <ProductPreview src={imgSrc} alt={name} /> : <EmptyPreview />}
+      </ThumbnailPreview>
     </Wrapper>
   );
 };
@@ -31,6 +39,18 @@ const ProductTitle = styled.h3`
   text-transform: uppercase;
   margin: ${pxToRem(25)} 0;
   font-size: ${(props): string => props.theme.fontSize.lg};
+`;
+
+const ThumbnailPreview = styled.div`
+  min-height: 400px;
+  height: 100%;
+`;
+
+const EmptyPreview = styled.div`
+  background-color: ${(props): string => props.theme.colors.blue};
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
 `;
 
 const ProductPreview = styled.img`
