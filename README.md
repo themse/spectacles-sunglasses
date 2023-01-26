@@ -6,6 +6,15 @@ components:
 1. Collections menu.
 2. Glasses view.
 
+## What's next?
+
+- Refactor sidebar menu, fix tiny bugs on mobile version
+- Implement infinite scroll for product list
+- Implement filters (by shape and colour)
+- Make Flux structure of state management in hooks generic
+- Improve product view page
+- Markup Error Page
+
 ## Preview
 
 <div style="display:flex; justify-content: center;">
