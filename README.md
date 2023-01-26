@@ -6,6 +6,12 @@ components:
 1. Collections menu.
 2. Glasses view.
 
+## Preview
+
+<div style="display:flex; justify-content: center;">
+    <img src="./preview.jpg" style="max-width: 700px;" />
+</div>
+
 ## Tech Stack
 
 - [CRA](https://create-react-app.dev/) - is an officially supported way to create single-page React applications. It offers a modern build setup with no configuration.
