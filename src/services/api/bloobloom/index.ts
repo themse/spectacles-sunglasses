@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { CollectionResponse, GlassResponse, FilterCriteria } from './types';
+import {
+  CollectionResponse,
+  GlassResponse,
+  FilterCriteria,
+  GlassItemResponse,
+  GlassItemPathObj,
+} from './types';
 
 const defaultUrl = 'https://staging-api.bloobloom.com';
 const BASE_URL = process.env.REACT_APP_API_BLOOBLOOM_URL ?? defaultUrl;
@@ -29,6 +35,20 @@ export const getGlasses = async (
     signal: controller?.signal,
 
     params: criteria,
+  });
+
+  return data;
+};
+
+export const getGlassItem = async (
+  { salesCategory, glassType }: GlassItemPathObj,
+
+  controller?: AbortController
+): Promise<GlassItemResponse> => {
+  const url = `${FULL_COLLECTION_PATH}/${salesCategory}/glasses/${glassType}`;
+
+  const { data } = await axios.get<GlassItemResponse>(url, {
+    signal: controller?.signal,
   });
 
   return data;

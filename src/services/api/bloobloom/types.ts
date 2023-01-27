@@ -48,6 +48,15 @@ export type GlassResponse = {
   meta: MetaData;
 };
 
+export type GlassItemResponse = {
+  glass: GlassItem;
+};
+
+export type GlassItemPathObj = {
+  salesCategory: string;
+  glassType: string;
+};
+
 // TODO improve keys
 export type FilterCriteria = Partial<{
   'page[limit]': number;
