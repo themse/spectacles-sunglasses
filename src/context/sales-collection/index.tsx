@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useContext, useEffect } from 'react';
 
 import { SalesCollectionState } from './types';
-import { useCollection } from 'hooks/useCollection';
+import { useCollection } from 'app/hooks/useCollection';
 
 const initialState: SalesCollectionState = {
   salesCollection: {},

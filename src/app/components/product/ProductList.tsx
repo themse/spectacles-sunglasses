@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ProductCard } from './ProductCard';
-import { useGlassList } from 'hooks/useGlassList';
+import { useGlassList } from 'app/hooks/useGlassList';
 import { Loader } from 'components/Loader';
 import { useInfiniteScroll } from 'hooks/useInfiniteScroll';
 
