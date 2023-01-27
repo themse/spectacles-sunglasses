@@ -24,14 +24,14 @@ type DataReturn = {
   isLoading: boolean;
   err: string | null;
 
+  totalAmount: number;
+  chunkLength: number;
   glassList?: GlassItem[] | null;
 };
 
 export const useGlassList = (): DataReturn => {
-  const [{ glassList, isLoading, err }, dispatch] = useReducer(
-    glassReducer,
-    glassInitialState
-  );
+  const [{ glassList, totalAmount, chunkLength, isLoading, err }, dispatch] =
+    useReducer(glassReducer, glassInitialState);
 
   const _mapRawDataToGlassList = (rawData: GlassItemApi[]): GlassItem[] => {
     return rawData.reduce((acc, item) => {
@@ -68,12 +68,21 @@ export const useGlassList = (): DataReturn => {
       try {
         dispatch({ type: GlassReducerActionKind.FETCH_GLASS_LIST });
 
-        const data = await getGlassListApi(categorySlug, criteria, controller);
-        const mappedGlassList = _mapRawDataToGlassList(data.glasses);
+        const { glasses, meta } = await getGlassListApi(
+          categorySlug,
+          criteria,
+          controller
+        );
+
+        const mappedGlassList = _mapRawDataToGlassList(glasses);
+        const totalAmount = meta.total_count;
 
         dispatch({
           type: GlassReducerActionKind.SUCCESS_GLASS_LIST,
-          payload: mappedGlassList,
+          payload: {
+            glassList: mappedGlassList,
+            totalAmount,
+          },
         });
       } catch (error) {
         const message = getErrorMessage(error);
@@ -87,5 +96,5 @@ export const useGlassList = (): DataReturn => {
     []
   );
 
-  return { getGlassList, glassList, isLoading, err };
+  return { getGlassList, glassList, totalAmount, chunkLength, isLoading, err };
 };

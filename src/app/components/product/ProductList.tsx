@@ -1,17 +1,41 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ProductCard } from './ProductCard';
 import { useGlassList } from 'hooks/useGlassList';
 import { Loader } from 'components/Loader';
+import { useInfiniteScroll } from 'hooks/useInfiniteScroll';
 
 type Props = {
   categorySlug: string;
 };
 
 export const ProductList: FC<Props> = ({ categorySlug }) => {
-  const { getGlassList, glassList, isLoading } = useGlassList();
+  const { getGlassList, glassList, totalAmount, chunkLength, isLoading } =
+    useGlassList();
+
+  const fetchMore = useCallback(
+    async (page: number): Promise<void> => {
+      // (page: 1) we fetch in useEffect
+      if (page === 1) {
+        return;
+      }
+
+      if (!categorySlug) {
+        return;
+      }
+
+      await getGlassList(categorySlug, {
+        'page[number]': page,
+      });
+    },
+    [categorySlug, getGlassList]
+  );
+
+  const { lastElementRef } = useInfiniteScroll(fetchMore, {
+    totalAmount,
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -28,15 +52,27 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
   return (
     <>
       <Grid>
-        {glassList?.map((glassItem) => (
-          <GridCell key={glassItem.id}>
-            <ProductCardLink
-              to={`/collections/${categorySlug}/glasses/${glassItem.category}/${glassItem.variant}`}
-            >
-              <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
-            </ProductCardLink>
-          </GridCell>
-        ))}
+        {glassList?.map((glassItem, idx) => {
+          const isLastElement = chunkLength === idx + 1;
+
+          return isLastElement && !isLoading ? (
+            <GridCell key={glassItem.id} ref={lastElementRef}>
+              <ProductCardLink
+                to={`/collections/${categorySlug}/glasses/${glassItem.category}/${glassItem.variant}`}
+              >
+                <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
+              </ProductCardLink>
+            </GridCell>
+          ) : (
+            <GridCell key={glassItem.id}>
+              <ProductCardLink
+                to={`/collections/${categorySlug}/glasses/${glassItem.category}/${glassItem.variant}`}
+              >
+                <ProductCard name={glassItem.name} imgSrc={glassItem.imgSrc} />
+              </ProductCardLink>
+            </GridCell>
+          );
+        })}
       </Grid>
       {isLoading && <Loader />}
     </>

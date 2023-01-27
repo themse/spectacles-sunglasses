@@ -11,10 +11,16 @@ type State = {
   isLoading: boolean;
   err: string | null;
 
+  totalAmount: number;
+  chunkLength: number;
   glassList?: GlassItem[] | null;
 };
 
 export const initialState: State = {
+  glassList: null,
+  totalAmount: 0,
+  chunkLength: 0,
+
   isLoading: false,
   err: null,
 };
@@ -27,7 +33,7 @@ export enum ReducerActionKind {
 
 type ReducerAction = {
   type: ReducerActionKind;
-  payload?: GlassItem[];
+  payload?: { glassList: GlassItem[]; totalAmount: number };
   err?: string;
 };
 
@@ -36,15 +42,22 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.FETCH_GLASS_LIST: {
       return {
         ...state,
-        glassList: null,
-        err: null,
+
         isLoading: true,
       };
     }
     case ReducerActionKind.SUCCESS_GLASS_LIST: {
+      const { glassList, totalAmount } = action.payload!;
+      const updatedGlassListSet = new Set([
+        ...(state.glassList ?? []),
+        ...glassList,
+      ]);
+
       return {
         ...state,
-        glassList: action.payload,
+        glassList: [...updatedGlassListSet],
+        totalAmount,
+        chunkLength: updatedGlassListSet.size,
 
         err: null,
         isLoading: false,
@@ -53,8 +66,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.FAILED_GLASS_LIST: {
       return {
         ...state,
-        glassList: null,
-        isLoading: false,
+        ...initialState,
 
         err: action.err ?? 'Something went wrong',
       };
