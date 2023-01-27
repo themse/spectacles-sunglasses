@@ -37,7 +37,7 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
     [categorySlug, getGlassList]
   );
 
-  const { lastElementRef } = useInfiniteScroll(fetchMore, {
+  const { lastElementRef, resetStartPage } = useInfiniteScroll(fetchMore, {
     totalAmount,
   });
 
@@ -52,6 +52,12 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
       controller.abort();
     };
   }, [categorySlug, getGlassList]);
+
+  useEffect(() => {
+    if (categorySlug) {
+      resetStartPage();
+    }
+  }, [categorySlug, resetStartPage]);
 
   return (
     <>

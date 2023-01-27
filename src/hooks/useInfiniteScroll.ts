@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 
+import { usePrevious } from 'hooks/usePrevious';
+
 const START_PAGE = 1;
 const OFFSET = 12;
 
@@ -14,6 +16,7 @@ type DataReturn = {
   page: number;
 
   lastElementRef: (node: Element | null) => void;
+  resetStartPage: () => void;
 };
 
 export const useInfiniteScroll = (
@@ -21,6 +24,8 @@ export const useInfiniteScroll = (
   { totalAmount, startPage = START_PAGE, offset = OFFSET }: PaginateConfig
 ): DataReturn => {
   const [page, setPage] = useState(startPage);
+  const prevPage = usePrevious(page);
+
   const [hasMore, setHasMore] = useState(false);
 
   const observer = useRef<IntersectionObserver>();
@@ -45,6 +50,11 @@ export const useInfiniteScroll = (
     [hasMore]
   );
 
+  const resetStartPage = useCallback((): void => {
+    setPage(START_PAGE);
+    setHasMore(false);
+  }, []);
+
   useEffect(() => {
     if (totalAmount > 0) {
       const totalPagesAmount = Math.ceil(totalAmount / offset);
@@ -54,10 +64,10 @@ export const useInfiniteScroll = (
   }, [page, totalAmount, offset]);
 
   useEffect(() => {
-    if (hasMore) {
+    if (hasMore && prevPage !== page) {
       fetchMore(page);
     }
-  }, [fetchMore, hasMore, page]);
+  }, [fetchMore, hasMore, page, prevPage]);
 
-  return { hasMore, page, lastElementRef };
+  return { hasMore, page, lastElementRef, resetStartPage };
 };
