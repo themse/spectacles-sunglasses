@@ -17,6 +17,7 @@ type DataReturn = {
   getGlassList: (
     categorySlug: string,
     filterCriteria?: FilterCriteria,
+    isFetchMore?: boolean,
 
     controller?: AbortController
   ) => Promise<void | never>;
@@ -53,6 +54,7 @@ export const useGlassList = (): DataReturn => {
     async (
       categorySlug: string,
       filterCriteria?: FilterCriteria,
+      isFetchMore?: boolean,
 
       controller?: AbortController
     ): Promise<void | never> => {
@@ -66,7 +68,11 @@ export const useGlassList = (): DataReturn => {
         ...filterCriteria,
       };
       try {
-        dispatch({ type: GlassReducerActionKind.FETCH_GLASS_LIST });
+        if (Boolean(isFetchMore)) {
+          dispatch({ type: GlassReducerActionKind.FETCH_MORE_GLASS_LIST });
+        } else {
+          dispatch({ type: GlassReducerActionKind.FETCH_GLASS_LIST });
+        }
 
         const { glasses, meta } = await getGlassListApi(
           categorySlug,

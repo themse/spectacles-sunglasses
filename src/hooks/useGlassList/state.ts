@@ -29,6 +29,8 @@ export enum ReducerActionKind {
   FETCH_GLASS_LIST,
   SUCCESS_GLASS_LIST,
   FAILED_GLASS_LIST,
+
+  FETCH_MORE_GLASS_LIST,
 }
 
 type ReducerAction = {
@@ -42,7 +44,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
     case ReducerActionKind.FETCH_GLASS_LIST: {
       return {
         ...state,
-
+        ...initialState,
         isLoading: true,
       };
     }
@@ -69,6 +71,14 @@ export const reducer = (state: State, action: ReducerAction): State => {
         ...initialState,
 
         err: action.err ?? 'Something went wrong',
+      };
+    }
+
+    case ReducerActionKind.FETCH_MORE_GLASS_LIST: {
+      return {
+        ...state,
+
+        isLoading: true,
       };
     }
 

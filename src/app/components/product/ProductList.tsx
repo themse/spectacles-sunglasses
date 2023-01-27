@@ -26,9 +26,13 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
         return;
       }
 
-      await getGlassList(categorySlug, {
-        'page[number]': page,
-      });
+      await getGlassList(
+        categorySlug,
+        {
+          'page[number]': page,
+        },
+        true
+      );
     },
     [categorySlug, getGlassList]
   );
@@ -41,7 +45,7 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
     const controller = new AbortController();
 
     if (categorySlug) {
-      getGlassList(categorySlug, {}, controller);
+      getGlassList(categorySlug, {}, false, controller);
     }
 
     return () => {
