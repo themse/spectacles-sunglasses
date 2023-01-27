@@ -9,10 +9,8 @@ components:
 ## What's next?
 
 - Refactor sidebar menu, fix tiny bugs on mobile version
-- Implement infinite scroll for product list
 - Implement filters (by shape and colour)
-- Make Flux structure of state management in hooks generic
-- Improve product view page
+- Make Request/Success/Failure pattern for state management in hooks
 - Markup Error Page
 
 ## Preview
