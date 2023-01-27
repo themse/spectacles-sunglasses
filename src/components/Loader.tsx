@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { Spinner } from './icons/Spinner';
+import { pxToRem } from 'styles/helpers';
 
 export const Loader: FC = () => {
   return (
@@ -24,7 +25,7 @@ const Wrapper = styled.div`
   color: ${(props): string => props.theme.colors.blue};
   width: 50px;
   height: 50px;
-  margin: 0 auto;
+  margin: ${pxToRem(10)} auto;
 
   animation: ${rotation} 1s infinite linear;
 `;
