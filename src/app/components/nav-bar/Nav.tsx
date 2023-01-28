@@ -4,12 +4,34 @@ import styled from 'styled-components';
 import { Dropdown } from 'components/Dropdown';
 import { pxToRem } from 'styles/helpers';
 import { PresentationLink } from 'components/PresentationLink';
+import { InputCheckbox } from 'components/form/InputCheckbox';
 
-const navigation: string[] = ['Colour', 'Shape'];
+enum FilterField {
+  COLOUR = 'Colour',
+  SHAPE = 'Shape',
+}
+
+const navigation = [
+  {
+    name: FilterField.COLOUR,
+    options: ['black', 'tortoise', 'coloured', 'crystal', 'dark', 'bright'],
+  },
+  {
+    name: FilterField.SHAPE,
+    options: ['square', 'rectangle', 'round', 'cat-eye'],
+  },
+];
 
 export const Nav: FC = () => {
   const [selectedNavItem, setSelectedNavItem] = useState<string>();
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const [selectedColorList, setSelectedColorList] = useState<Set<string>>(
+    new Set()
+  );
+  const [selectedShapeList, setSelectedShapeList] = useState<Set<string>>(
+    new Set()
+  );
 
   const onShowDropdown = (navItem: string): void => {
     if (navItem === selectedNavItem) {
@@ -24,20 +46,58 @@ export const Nav: FC = () => {
     setShowDropdown(false);
   };
 
+  const onFilterSelect = (name: FilterField, value: string): void => {
+    if (name === FilterField.COLOUR) {
+      const mutSelectedColorList = new Set(selectedColorList);
+
+      mutSelectedColorList.has(value)
+        ? mutSelectedColorList.delete(value)
+        : mutSelectedColorList.add(value);
+
+      setSelectedColorList(mutSelectedColorList);
+    } else if (name === FilterField.SHAPE) {
+      const mutSelectedShapeList = new Set(selectedShapeList);
+
+      mutSelectedShapeList.has(value)
+        ? mutSelectedShapeList.delete(value)
+        : mutSelectedShapeList.add(value);
+
+      setSelectedShapeList(mutSelectedShapeList);
+    }
+  };
+
   return (
     <StyledNav>
       <NavList>
-        {navigation.map((navItem) => (
-          <NavItem key={navItem} onMouseLeave={hideDropdown}>
+        {navigation.map(({ name, options }) => (
+          <NavItem key={name} onMouseLeave={hideDropdown}>
             <Dropdown
-              isOpen={selectedNavItem === navItem && showDropdown}
+              isOpen={selectedNavItem === name && showDropdown}
               trigger={
-                <NavLink onClick={(): void => onShowDropdown(navItem)}>
-                  <NavLabel>{navItem}</NavLabel>
+                <NavLink onClick={(): void => onShowDropdown(name)}>
+                  <NavLabel>{name}</NavLabel>
                 </NavLink>
               }
             >
-              <p>Hello world</p>
+              {options.map((option) => {
+                let isChecked = false;
+
+                if (name === FilterField.COLOUR) {
+                  isChecked = selectedColorList.has(option);
+                } else if (name === FilterField.SHAPE) {
+                  isChecked = selectedShapeList.has(option);
+                }
+
+                return (
+                  <InputCheckbox
+                    key={option}
+                    name={option}
+                    onChange={(): void => onFilterSelect(name, option)}
+                    isChecked={isChecked}
+                    label={option}
+                  />
+                );
+              })}
             </Dropdown>
           </NavItem>
         ))}
@@ -84,6 +144,6 @@ const NavLink = styled(PresentationLink)`
 
 const NavLabel = styled.span`
   display: block;
-  padding: ${pxToRem(24)} ${pxToRem(15)}; // TODO improve spacing
+  padding: ${pxToRem(24)} ${pxToRem(15)}; // TODO improve spacing, bug on tablet
   text-transform: uppercase;
 `;

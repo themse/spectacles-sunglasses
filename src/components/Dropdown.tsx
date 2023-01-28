@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   position: absolute;
-  min-width: 150px;
+  min-width: 120px;
   ${bgColor('white')};
   padding: ${pxToRem(15)};
   z-index: 99;

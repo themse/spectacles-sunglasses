@@ -1,8 +1,6 @@
 import { FC, SVGProps } from 'react';
 
-type Props = SVGProps<SVGSVGElement> & {
-  className?: string | unknown;
-};
+type Props = SVGProps<SVGSVGElement>;
 
 export const ArrowRight: FC<Props> = ({ className }) => {
   return (
