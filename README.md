@@ -65,6 +65,4 @@ The project code base is mainly located within the `src` folder. This folder is 
 ## What's next?
 
 - Refactor sidebar menu, fix tiny bugs on mobile version
-- Implement filters (by shape and colour)
-- Make Request/Success/Failure pattern for state management in hooks
-- Markup Error Page
+- Implement filters (by shape and color)

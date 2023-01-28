@@ -5,6 +5,7 @@ import { ContainerFluid } from 'components/grid/ContainerFluid';
 import { Row } from 'components/grid/Row';
 import { FontFace } from 'styles/types';
 import { pxToRem } from 'styles/helpers';
+import { borderX, borderY } from 'styles/mixins';
 import { Nav } from './Nav';
 
 type Props = {
@@ -34,8 +35,7 @@ export const NavBar: FC<Props> = ({ category, sex }) => {
 };
 
 const Wrapper = styled.div`
-  border-top: 1px solid ${(props): string => props.theme.colors.dark};
-  border-bottom: 1px solid ${(props): string => props.theme.colors.dark};
+  ${borderY({ color: 'dark' })};
 `;
 
 const GridCell = styled.div`
@@ -64,8 +64,7 @@ const Grid = styled.div`
       grid-area: auto;
     }
 
-    border-left: 1px solid ${(props): string => props.theme.colors.dark};
-    border-right: 1px solid ${(props): string => props.theme.colors.dark};
+    ${borderX({ color: 'dark' })};
 
     @media screen and (max-width: ${(props): string =>
         props.theme.screens.sm}) {

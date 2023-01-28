@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { pxToRem } from 'styles/helpers';
+import { paddingX } from 'styles/mixins';
 
 export const ContainerFluid = styled.div`
   max-width: ${({ theme }): string => theme.screens.xxl};
@@ -9,10 +10,10 @@ export const ContainerFluid = styled.div`
   width: 100%;
 
   @media screen and (max-width: ${({ theme }): string => theme.screens.xl}) {
-    padding: 0 ${pxToRem(15)};
+    ${paddingX(15)};
   }
 
   @media screen and (max-width: ${({ theme }): string => theme.screens.sm}) {
-    padding: 0 ${pxToRem(5)};
+    ${paddingX(5)};
   }
 `;

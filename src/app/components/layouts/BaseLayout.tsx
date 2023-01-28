@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Header } from './Header';
+import { bgColor } from 'styles/mixins';
 
 type Props = {
   children: ReactNode;
@@ -22,6 +23,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+
+  ${bgColor('#f6f6f4')};
 `;
 
 const Main = styled.main`

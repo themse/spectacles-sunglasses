@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ContainerFluid } from 'components/grid/ContainerFluid';
 import { Logo } from '../Logo';
 import { SidebarMenu } from '../SidebarMenu';
+import { bgColor } from 'styles/mixins';
 
 export const Header: FC = () => {
   return (
@@ -32,7 +33,7 @@ const Wrapper = styled.header`
   width: 100%;
   z-index: 99;
   border-bottom: 1px solid ${(props): string => props.theme.colors.dark};
-  background-color: ${(props): string => props.theme.colors.white};
+  ${bgColor('white')}
 `;
 
 const Brand = styled.h1``;
