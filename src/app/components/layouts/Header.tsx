@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ContainerFluid } from 'components/grid/ContainerFluid';
 import { Logo } from '../Logo';
-import { SidebarMenu } from '../SidebarMenu';
+import { SidebarMenu } from '../sidebar-menu/SidebarMenu';
 import { bgColor } from 'styles/mixins';
 
 export const Header: FC = () => {
