@@ -1,28 +1,44 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
+import { Dropdown } from 'components/Dropdown';
 import { pxToRem } from 'styles/helpers';
+import { PresentationLink } from 'components/PresentationLink';
 
-const navigation: { href: string; title: string }[] = [
-  {
-    href: '#colour',
-    title: 'Colour',
-  },
-  {
-    href: '#shape',
-    title: 'Shape',
-  },
-];
+const navigation: string[] = ['Colour', 'Shape'];
 
 export const Nav: FC = () => {
+  const [selectedNavItem, setSelectedNavItem] = useState<string>();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const onShowDropdown = (navItem: string): void => {
+    if (navItem === selectedNavItem) {
+      setShowDropdown((prev) => !prev);
+    } else {
+      setSelectedNavItem(navItem);
+      setShowDropdown(true);
+    }
+  };
+
+  const hideDropdown = (): void => {
+    setShowDropdown(false);
+  };
+
   return (
     <StyledNav>
       <NavList>
         {navigation.map((navItem) => (
-          <NavItem key={navItem.href}>
-            <NavLink href={navItem.href}>
-              <NavLabel>{navItem.title}</NavLabel>
-            </NavLink>
+          <NavItem key={navItem} onMouseLeave={hideDropdown}>
+            <Dropdown
+              isOpen={selectedNavItem === navItem && showDropdown}
+              trigger={
+                <NavLink onClick={(): void => onShowDropdown(navItem)}>
+                  <NavLabel>{navItem}</NavLabel>
+                </NavLink>
+              }
+            >
+              <p>Hello world</p>
+            </Dropdown>
           </NavItem>
         ))}
       </NavList>
@@ -56,16 +72,18 @@ const NavItem = styled.li`
       border-right: none;
     }
   }
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
-const NavLink = styled.a``;
+const NavLink = styled(PresentationLink)`
+  cursor: pointer;
+
+  @media screen and (max-width: 500px) {
+    text-align: center;
+  }
+`;
 
 const NavLabel = styled.span`
   display: block;
-  padding: ${pxToRem(15)};
+  padding: ${pxToRem(24)} ${pxToRem(15)}; // TODO improve spacing
   text-transform: uppercase;
 `;
