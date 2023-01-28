@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { bgColor } from 'styles/mixins';
-import { MenuItem } from './SidebarMenu';
+import { MenuItem, MenuItemLabel, StyledArrowRightIcon } from './SidebarMenu';
 import { ObjectEntries } from 'types/helpers';
 import { SalesCollectionItem } from 'context/sales-collection/types';
 import { SubMenuList } from './SubMenuList';
@@ -50,7 +50,10 @@ export const MenuList: FC<Props> = ({ onClick, onMouseLeave }) => {
               role="presentation"
               onClick={(): void => onShowSubMenu(category)}
             >
-              <MenuItem>{category}</MenuItem>
+              <MenuItem>
+                <MenuItemLabel>{category}</MenuItemLabel>
+                <StyledArrowRightIcon />
+              </MenuItem>
             </a>
             {collection.length > 0 && isSelected && (
               <SubMenuList
@@ -64,12 +67,16 @@ export const MenuList: FC<Props> = ({ onClick, onMouseLeave }) => {
       })}
       <li>
         <a href="#">
-          <MenuItem>Home try on</MenuItem>
+          <MenuItem>
+            <MenuItemLabel>Home try on</MenuItemLabel>
+          </MenuItem>
         </a>
       </li>
       <li>
         <a href="#">
-          <MenuItem>Pair for pair</MenuItem>
+          <MenuItem>
+            <MenuItemLabel>Pair for pair</MenuItemLabel>
+          </MenuItem>
         </a>
       </li>
     </StyledMenuList>

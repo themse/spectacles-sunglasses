@@ -5,6 +5,7 @@ import { pxToRem } from 'styles/helpers';
 import { bgColor, btnAsLink } from 'styles/mixins';
 import { FontFace } from 'styles/types';
 import { MenuList } from './MenuList';
+import { ArrowRight as ArrowRightIcon } from 'components/icons/ArrowRight';
 
 export const SidebarMenu: FC = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -54,11 +55,23 @@ const MenuBtn = styled.button.attrs({
       : css``}
 `;
 
-export const MenuItem = styled.span`
+export const MenuItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   border-bottom: 1px solid ${(props): string => props.theme.colors.dark};
-  display: block;
   padding: ${pxToRem(24)} ${pxToRem(18)};
+`;
+
+export const MenuItemLabel = styled.span`
   text-transform: uppercase;
+`;
+
+export const StyledArrowRightIcon = styled(ArrowRightIcon)`
+  transform: translateY(12px);
+  margin-top: -24px;
+  color: ${(props): string => props.theme.colors.blue};
 `;
 
 const SidebarWrapper = styled.div`
@@ -77,6 +90,10 @@ const SidebarWrapper = styled.div`
       ${MenuItem} {
         ${bgColor('dark')};
         color: ${(props): string => props.theme.colors.white};
+
+        > ${StyledArrowRightIcon} {
+          color: ${(props): string => props.theme.colors.white};
+        }
       }
     }
   }

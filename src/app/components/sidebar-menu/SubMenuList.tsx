@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { MenuItem } from './SidebarMenu';
+import { MenuItem, MenuItemLabel } from './SidebarMenu';
 import { SalesCollectionItem } from 'context/sales-collection/types';
 
 type Props = {
@@ -22,7 +22,9 @@ export const SubMenuList: FC<Props> = ({
       {collection.map((item) => (
         <li key={item.id}>
           <Link to={`/collections/${item.slug}`} onClick={onClick}>
-            <MenuItem>{item.sex}</MenuItem>
+            <MenuItem>
+              <MenuItemLabel>{item.sex}</MenuItemLabel>
+            </MenuItem>
           </Link>
         </li>
       ))}
