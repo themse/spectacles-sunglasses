@@ -52,20 +52,20 @@ export const useCollection = (): DataReturn => {
   const getCollection = useCallback(
     async (controller?: AbortController): Promise<void | never> => {
       try {
-        dispatch({ type: CollectionReducerActionKind.FETCH_COLLECTION_LIST });
+        dispatch({ type: CollectionReducerActionKind.REQUEST });
 
         const data = await getCollectionApi(controller);
         const mappedCollection = _mapRawDataToCollectionList(data.collections);
 
         dispatch({
-          type: CollectionReducerActionKind.SUCCESS_COLLECTION_LIST,
+          type: CollectionReducerActionKind.SUCCESS,
           payload: mappedCollection,
         });
       } catch (error) {
         const message = getErrorMessage(error);
 
         dispatch({
-          type: CollectionReducerActionKind.FAILED_COLLECTION_LIST,
+          type: CollectionReducerActionKind.FAILURE,
           err: message,
         });
       }

@@ -69,9 +69,9 @@ export const useGlassList = (): DataReturn => {
       };
       try {
         if (Boolean(isFetchMore)) {
-          dispatch({ type: GlassReducerActionKind.FETCH_MORE_GLASS_LIST });
+          dispatch({ type: GlassReducerActionKind.FETCH_MORE });
         } else {
-          dispatch({ type: GlassReducerActionKind.FETCH_GLASS_LIST });
+          dispatch({ type: GlassReducerActionKind.REQUEST });
         }
 
         const { glasses, meta } = await getGlassListApi(
@@ -84,7 +84,7 @@ export const useGlassList = (): DataReturn => {
         const totalAmount = meta.total_count;
 
         dispatch({
-          type: GlassReducerActionKind.SUCCESS_GLASS_LIST,
+          type: GlassReducerActionKind.SUCCESS,
           payload: {
             glassList: mappedGlassList,
             totalAmount,
@@ -94,7 +94,7 @@ export const useGlassList = (): DataReturn => {
         const message = getErrorMessage(error);
 
         dispatch({
-          type: GlassReducerActionKind.FAILED_GLASS_LIST,
+          type: GlassReducerActionKind.FAILURE,
           err: message,
         });
       }

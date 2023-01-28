@@ -26,11 +26,11 @@ export const initialState: State = {
 };
 
 export enum ReducerActionKind {
-  FETCH_GLASS_LIST,
-  SUCCESS_GLASS_LIST,
-  FAILED_GLASS_LIST,
+  REQUEST,
+  SUCCESS,
+  FAILURE,
 
-  FETCH_MORE_GLASS_LIST,
+  FETCH_MORE,
 }
 
 type ReducerAction = {
@@ -41,14 +41,14 @@ type ReducerAction = {
 
 export const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
-    case ReducerActionKind.FETCH_GLASS_LIST: {
+    case ReducerActionKind.REQUEST: {
       return {
         ...state,
         ...initialState,
         isLoading: true,
       };
     }
-    case ReducerActionKind.SUCCESS_GLASS_LIST: {
+    case ReducerActionKind.SUCCESS: {
       const { glassList, totalAmount } = action.payload!;
       const updatedGlassListSet = new Set([
         ...(state.glassList ?? []),
@@ -65,7 +65,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
         isLoading: false,
       };
     }
-    case ReducerActionKind.FAILED_GLASS_LIST: {
+    case ReducerActionKind.FAILURE: {
       return {
         ...state,
         ...initialState,
@@ -74,7 +74,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
       };
     }
 
-    case ReducerActionKind.FETCH_MORE_GLASS_LIST: {
+    case ReducerActionKind.FETCH_MORE: {
       return {
         ...state,
 

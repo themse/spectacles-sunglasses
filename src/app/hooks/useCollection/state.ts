@@ -19,9 +19,9 @@ export const initialState: State = {
 };
 
 export enum ReducerActionKind {
-  FETCH_COLLECTION_LIST,
-  SUCCESS_COLLECTION_LIST,
-  FAILED_COLLECTION_LIST,
+  REQUEST,
+  SUCCESS,
+  FAILURE,
 }
 
 type ReducerAction = {
@@ -32,7 +32,7 @@ type ReducerAction = {
 
 export const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {
-    case ReducerActionKind.FETCH_COLLECTION_LIST: {
+    case ReducerActionKind.REQUEST: {
       return {
         ...state,
         collection: null,
@@ -40,7 +40,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
         isLoading: true,
       };
     }
-    case ReducerActionKind.SUCCESS_COLLECTION_LIST: {
+    case ReducerActionKind.SUCCESS: {
       return {
         ...state,
         collection: action.payload,
@@ -49,7 +49,7 @@ export const reducer = (state: State, action: ReducerAction): State => {
         isLoading: false,
       };
     }
-    case ReducerActionKind.FAILED_COLLECTION_LIST: {
+    case ReducerActionKind.FAILURE: {
       return {
         ...state,
         collection: null,
