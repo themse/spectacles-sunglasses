@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
@@ -9,6 +7,7 @@ import { ObjectEntries } from 'types/helpers';
 import { SalesCollectionItem } from 'context/sales-collection/types';
 import { SubMenuList } from './SubMenuList';
 import { useSalesCollection } from 'context/sales-collection';
+import { PresentationLink } from 'components/PresentationLink';
 
 type Props = {
   onClick: () => void;
@@ -46,38 +45,36 @@ export const MenuList: FC<Props> = ({ onClick, onMouseLeave }) => {
 
         return (
           <li key={category}>
-            <a
-              role="presentation"
-              onClick={(): void => onShowSubMenu(category)}
-            >
+            <PresentationLink onClick={(): void => onShowSubMenu(category)}>
               <MenuItem>
                 <MenuItemLabel>{category}</MenuItemLabel>
                 <StyledArrowRightIcon />
               </MenuItem>
-            </a>
+            </PresentationLink>
             {collection.length > 0 && isSelected && (
               <SubMenuList
                 collection={collection}
                 onClick={onClick}
                 onMouseLeave={hideSubMenu}
+                onGoBack={hideSubMenu}
               />
             )}
           </li>
         );
       })}
       <li>
-        <a href="#">
+        <PresentationLink>
           <MenuItem>
             <MenuItemLabel>Home try on</MenuItemLabel>
           </MenuItem>
-        </a>
+        </PresentationLink>
       </li>
       <li>
-        <a href="#">
+        <PresentationLink>
           <MenuItem>
             <MenuItemLabel>Pair for pair</MenuItemLabel>
           </MenuItem>
-        </a>
+        </PresentationLink>
       </li>
     </StyledMenuList>
   );
@@ -95,5 +92,3 @@ const StyledMenuList = styled.ul`
   border-right: 1px solid ${(props): string => props.theme.colors.dark};
   ${bgColor('white')};
 `;
-
-/* eslint-enable jsx-a11y/anchor-is-valid */
