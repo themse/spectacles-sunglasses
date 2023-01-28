@@ -34,4 +34,5 @@ const Content = styled.div`
   border: 1px solid ${(props): string => props.theme.colors.dark};
   border-top: none;
   margin-top: 1px;
+  margin-left: -1px;
 `;

@@ -5,11 +5,7 @@ import { Dropdown } from 'components/Dropdown';
 import { pxToRem } from 'styles/helpers';
 import { PresentationLink } from 'components/PresentationLink';
 import { InputCheckbox } from 'components/form/InputCheckbox';
-
-enum FilterField {
-  COLOUR = 'Colour',
-  SHAPE = 'Shape',
-}
+import { FilterField, useFilter } from 'app/hooks/useFilter';
 
 const navigation = [
   {
@@ -26,12 +22,7 @@ export const Nav: FC = () => {
   const [selectedNavItem, setSelectedNavItem] = useState<string>();
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const [selectedColorList, setSelectedColorList] = useState<Set<string>>(
-    new Set()
-  );
-  const [selectedShapeList, setSelectedShapeList] = useState<Set<string>>(
-    new Set()
-  );
+  const { selectedColorList, selectedShapeList, onFilterSelect } = useFilter();
 
   const onShowDropdown = (navItem: string): void => {
     if (navItem === selectedNavItem) {
@@ -44,26 +35,6 @@ export const Nav: FC = () => {
 
   const hideDropdown = (): void => {
     setShowDropdown(false);
-  };
-
-  const onFilterSelect = (name: FilterField, value: string): void => {
-    if (name === FilterField.COLOUR) {
-      const mutSelectedColorList = new Set(selectedColorList);
-
-      mutSelectedColorList.has(value)
-        ? mutSelectedColorList.delete(value)
-        : mutSelectedColorList.add(value);
-
-      setSelectedColorList(mutSelectedColorList);
-    } else if (name === FilterField.SHAPE) {
-      const mutSelectedShapeList = new Set(selectedShapeList);
-
-      mutSelectedShapeList.has(value)
-        ? mutSelectedShapeList.delete(value)
-        : mutSelectedShapeList.add(value);
-
-      setSelectedShapeList(mutSelectedShapeList);
-    }
   };
 
   return (

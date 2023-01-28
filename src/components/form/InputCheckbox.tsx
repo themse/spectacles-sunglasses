@@ -59,6 +59,7 @@ const CheckboxWrapper = styled.div<{ isChecked: boolean }>`
 const StyledCheckmarkIcon = styled(CheckmarkIcon)`
   width: ${pxToRem(8)};
   height: ${pxToRem(8)};
+  color: ${(props): string => props.theme.colors.blue};
 `;
 
 const InputCheckboxLabel = styled.label`
