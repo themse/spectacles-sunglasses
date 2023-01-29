@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Dropdown } from 'components/Dropdown';
 import { pxToRem } from 'styles/helpers';
 import { PresentationLink } from 'components/PresentationLink';
-import { InputCheckbox } from 'components/form/InputCheckbox';
+import { InputCheckboxItem } from 'components/form/checkbox/InputCheckboxItem';
 import { FilterField, useFilter } from 'app/hooks/useFilter';
 
 const navigation = [
@@ -75,7 +75,7 @@ export const Nav: FC = () => {
                   }
 
                   return (
-                    <InputCheckbox
+                    <InputCheckboxItem
                       key={option}
                       name={name}
                       value={option}
