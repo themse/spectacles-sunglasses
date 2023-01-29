@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { Dropdown } from 'components/Dropdown';
@@ -22,7 +22,7 @@ export const Nav: FC = () => {
   const [selectedNavItem, setSelectedNavItem] = useState<string>();
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const { selectedColorList, selectedShapeList, onFilterSelect } = useFilter();
+  const { selectedColorSet, selectedShapeSet, onFilterSelect } = useFilter();
 
   const onShowDropdown = (navItem: string): void => {
     if (navItem === selectedNavItem) {
@@ -35,6 +35,16 @@ export const Nav: FC = () => {
 
   const hideDropdown = (): void => {
     setShowDropdown(false);
+  };
+
+  const onChangeForm = (
+    event: ChangeEvent<HTMLFormElement>,
+    name: FilterField
+  ): void => {
+    const $form = event.currentTarget;
+    const formData = new FormData($form);
+
+    onFilterSelect(name, formData.getAll(name) as string[]);
   };
 
   return (
@@ -50,25 +60,32 @@ export const Nav: FC = () => {
                 </NavLink>
               }
             >
-              {options.map((option) => {
-                let isChecked = false;
-
-                if (name === FilterField.COLOUR) {
-                  isChecked = selectedColorList.has(option);
-                } else if (name === FilterField.SHAPE) {
-                  isChecked = selectedShapeList.has(option);
+              <form
+                onChange={(event: ChangeEvent<HTMLFormElement>): void =>
+                  onChangeForm(event, name)
                 }
+              >
+                {options.map((option) => {
+                  let isChecked = false;
 
-                return (
-                  <InputCheckbox
-                    key={option}
-                    name={option}
-                    onChange={(): void => onFilterSelect(name, option)}
-                    isChecked={isChecked}
-                    label={option}
-                  />
-                );
-              })}
+                  if (name === FilterField.COLOUR) {
+                    isChecked = selectedColorSet.has(option);
+                  } else if (name === FilterField.SHAPE) {
+                    isChecked = selectedShapeSet.has(option);
+                  }
+
+                  return (
+                    <InputCheckbox
+                      key={option}
+                      name={name}
+                      value={option}
+                      defaultChecked={isChecked}
+                      isIconChecked={isChecked}
+                      label={option}
+                    />
+                  );
+                })}
+              </form>
             </Dropdown>
           </NavItem>
         ))}

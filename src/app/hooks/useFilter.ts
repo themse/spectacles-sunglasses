@@ -6,39 +6,37 @@ export enum FilterField {
 }
 
 type DataReturn = {
-  selectedColorList: Set<string>;
-  selectedShapeList: Set<string>;
+  selectedColorSet: Set<string>;
+  selectedShapeSet: Set<string>;
 
-  onFilterSelect: (name: FilterField, value: string) => void;
+  onFilterSelect: (name: FilterField, values: string[]) => void;
 };
 
 export const useFilter = (): DataReturn => {
-  const [selectedColorList, setSelectedColorList] = useState<Set<string>>(
+  const [selectedColorSet, setSelectedColorSet] = useState<Set<string>>(
     new Set()
   );
-  const [selectedShapeList, setSelectedShapeList] = useState<Set<string>>(
+  const [selectedShapeSet, setSelectedShapeSet] = useState<Set<string>>(
     new Set()
   );
 
-  const onFilterSelect = (name: FilterField, value: string): void => {
-    if (name === FilterField.COLOUR) {
-      const mutSelectedColorList = new Set(selectedColorList);
+  const onFilterSelect = (name: FilterField, values: string[]): void => {
+    switch (name) {
+      case FilterField.COLOUR: {
+        setSelectedColorSet(new Set(values));
 
-      mutSelectedColorList.has(value)
-        ? mutSelectedColorList.delete(value)
-        : mutSelectedColorList.add(value);
-
-      setSelectedColorList(mutSelectedColorList);
-    } else if (name === FilterField.SHAPE) {
-      const mutSelectedShapeList = new Set(selectedShapeList);
-
-      mutSelectedShapeList.has(value)
-        ? mutSelectedShapeList.delete(value)
-        : mutSelectedShapeList.add(value);
-
-      setSelectedShapeList(mutSelectedShapeList);
+        break;
+      }
+      case FilterField.SHAPE: {
+        setSelectedShapeSet(new Set(values));
+        break;
+      }
+      default: {
+        // ignore unnecessary keys
+        break;
+      }
     }
   };
 
-  return { selectedColorList, selectedShapeList, onFilterSelect };
+  return { selectedColorSet, selectedShapeSet, onFilterSelect };
 };

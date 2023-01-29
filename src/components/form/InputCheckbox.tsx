@@ -14,31 +14,47 @@ const Checkbox: FC<{ isChecked?: boolean }> = ({ isChecked = false }) => {
 
 type Props = {
   name: string;
-  onChange: ({ name, isChecked }: { name: string; isChecked: boolean }) => void;
 
+  value?: string;
   label?: string;
-  isChecked?: boolean;
+  isChecked?: boolean; // don't use with FormData
+  defaultChecked?: boolean; // use with FormData
+  isIconChecked?: boolean; // use with FormData
+
+  onChange?: ({
+    name,
+    isChecked,
+  }: {
+    name: string;
+    isChecked: boolean;
+  }) => void;
 };
 
+// TODO make 2 separate components: InputCheckboxItem (using in <form></form>) and InputCheckboxItem (as an independent component)
 export const InputCheckbox: FC<Props> = ({
   name,
   label,
   onChange: onChangeProp,
 
-  isChecked = false,
+  value,
+  isChecked,
+  defaultChecked,
+  isIconChecked,
 }) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    onChangeProp({ name, isChecked: event.target.checked });
+    onChangeProp?.({ name, isChecked: event.target.checked });
   };
 
   return (
     <InputCheckboxLabel>
       <StyledInputCheckbox
         name={name}
+        value={value}
+        defaultChecked={defaultChecked}
         checked={isChecked}
         onChange={onChange}
       />
-      <Checkbox isChecked={isChecked} />
+      <Checkbox isChecked={isIconChecked ?? defaultChecked ?? isChecked} />
       {label && <p>{label}</p>}
     </InputCheckboxLabel>
   );
