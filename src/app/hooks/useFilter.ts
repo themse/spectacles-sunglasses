@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useQueryParam } from 'hooks/useQueryParam';
 
 export enum FilterField {
-  COLOUR = 'Colour',
-  SHAPE = 'Shape',
+  COLOUR = 'colour',
+  SHAPE = 'shape',
 }
+
+const allowedFilterKeySet = new Set(Object.values(FilterField));
 
 type DataReturn = {
   selectedColorSet: Set<string>;
@@ -13,29 +15,13 @@ type DataReturn = {
 };
 
 export const useFilter = (): DataReturn => {
-  const [selectedColorSet, setSelectedColorSet] = useState<Set<string>>(
-    new Set()
-  );
-  const [selectedShapeSet, setSelectedShapeSet] = useState<Set<string>>(
-    new Set()
-  );
+  const { params, setParams } = useQueryParam(allowedFilterKeySet);
+
+  const selectedColorSet = new Set(params?.[FilterField.COLOUR] ?? []);
+  const selectedShapeSet = new Set(params?.[FilterField.SHAPE] ?? []);
 
   const onFilterSelect = (name: FilterField, values: string[]): void => {
-    switch (name) {
-      case FilterField.COLOUR: {
-        setSelectedColorSet(new Set(values));
-
-        break;
-      }
-      case FilterField.SHAPE: {
-        setSelectedShapeSet(new Set(values));
-        break;
-      }
-      default: {
-        // ignore unnecessary keys
-        break;
-      }
-    }
+    setParams({ [name]: values });
   };
 
   return { selectedColorSet, selectedShapeSet, onFilterSelect };
