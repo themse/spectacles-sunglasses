@@ -57,7 +57,6 @@ export type GlassItemPathObj = {
   glassType: string;
 };
 
-// TODO improve keys
 export type FilterCriteria = Partial<{
   'page[limit]': number;
   'page[number]': number;
