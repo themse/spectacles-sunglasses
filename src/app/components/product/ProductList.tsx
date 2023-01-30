@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ProductCard } from './ProductCard';
-import { useGlassList } from 'app/hooks/useGlassList';
+import { useGlassListContext } from 'context/glass-list';
 import { Loader } from 'components/Loader';
 import { useInfiniteScroll } from 'hooks/useInfiniteScroll';
 import { useFilter } from 'app/hooks/useFilter';
@@ -14,7 +14,7 @@ type Props = {
 
 export const ProductList: FC<Props> = ({ categorySlug }) => {
   const { getGlassList, glassList, totalAmount, chunkLength, isLoading } =
-    useGlassList();
+    useGlassListContext();
 
   const { filterParams, onFilterGlassList } = useFilter();
 
@@ -29,18 +29,16 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
         return;
       }
 
-      // TODO move glassList data to context API instead of callback
       await onFilterGlassList(
         categorySlug,
         {
           ...filterParams,
           page,
         },
-        getGlassList,
         true
       );
     },
-    [categorySlug, filterParams, getGlassList, onFilterGlassList]
+    [categorySlug, filterParams, onFilterGlassList]
   );
 
   const { lastElementRef, resetStartPage } = useInfiniteScroll(fetchMore, {
@@ -53,14 +51,7 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
     if (categorySlug) {
       resetStartPage();
 
-      // TODO move glassList data to context API instead of callback
-      onFilterGlassList(
-        categorySlug,
-        filterParams,
-        getGlassList,
-        false,
-        controller
-      );
+      onFilterGlassList(categorySlug, filterParams, false, controller);
     }
 
     return () => {

@@ -7,7 +7,7 @@ export type GlassItem = {
   variant: string;
 };
 
-type State = {
+export type State = {
   isLoading: boolean;
   err: string | null;
 

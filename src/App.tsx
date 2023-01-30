@@ -5,6 +5,7 @@ import { GlobalStyle } from 'styles/GlobalStyles';
 import { ThemeProvider } from 'styles/themes/ThemeProvider';
 import { AppRoutes } from 'AppRoutes';
 import { SalesCollectionProvider } from 'context/sales-collection';
+import { GlassListProvider } from 'context/glass-list';
 
 const App: FC = () => {
   useEffect(() => {
@@ -17,10 +18,12 @@ const App: FC = () => {
 
   return (
     <SalesCollectionProvider>
-      <GlobalStyle />
-      <ThemeProvider>
-        <AppRoutes />
-      </ThemeProvider>
+      <GlassListProvider>
+        <GlobalStyle />
+        <ThemeProvider>
+          <AppRoutes />
+        </ThemeProvider>
+      </GlassListProvider>
     </SalesCollectionProvider>
   );
 };

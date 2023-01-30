@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import { useQueryParam } from 'hooks/useQueryParam';
 import { FilterCriteria } from 'services/api/bloobloom/types';
+import { useGlassListContext } from 'context/glass-list';
 
 export enum FilterField {
   COLOUR = 'colour',
@@ -20,14 +21,6 @@ type DataReturn = {
     categorySlug: string,
     params: Record<string, string[]> | any, // TODO check type for page
 
-    getGlassList: (
-      categorySlug: string,
-      filterCriteria?: FilterCriteria,
-      isFetchMore?: boolean,
-
-      controller?: AbortController
-    ) => Promise<void | never>,
-
     isFetchMore?: boolean,
     controller?: AbortController
   ) => Promise<void>;
@@ -35,6 +28,8 @@ type DataReturn = {
 
 export const useFilter = (): DataReturn => {
   const { params, setParams } = useQueryParam(allowedFilterKeySet);
+
+  const { getGlassList } = useGlassListContext();
 
   const selectedColorSet = new Set(params?.[FilterField.COLOUR] ?? []);
   const selectedShapeSet = new Set(params?.[FilterField.SHAPE] ?? []);
@@ -47,14 +42,6 @@ export const useFilter = (): DataReturn => {
     async (
       categorySlug: string,
       params: Record<string, string[]> & { page?: number },
-
-      getGlassList: (
-        categorySlug: string,
-        filterCriteria?: FilterCriteria,
-        isFetchMore?: boolean,
-
-        controller?: AbortController
-      ) => Promise<void | never>,
 
       isFetchMore?: boolean,
       controller?: AbortController
@@ -74,9 +61,14 @@ export const useFilter = (): DataReturn => {
         }),
       };
 
-      await getGlassList(categorySlug, filterCriteria, isFetchMore, controller);
+      await getGlassList?.(
+        categorySlug,
+        filterCriteria,
+        isFetchMore,
+        controller
+      );
     },
-    []
+    [getGlassList]
   );
 
   return {
