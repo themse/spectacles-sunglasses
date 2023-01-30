@@ -6,6 +6,7 @@ import { ProductCard } from './ProductCard';
 import { useGlassList } from 'app/hooks/useGlassList';
 import { Loader } from 'components/Loader';
 import { useInfiniteScroll } from 'hooks/useInfiniteScroll';
+import { useFilter } from 'app/hooks/useFilter';
 
 type Props = {
   categorySlug: string;
@@ -14,6 +15,8 @@ type Props = {
 export const ProductList: FC<Props> = ({ categorySlug }) => {
   const { getGlassList, glassList, totalAmount, chunkLength, isLoading } =
     useGlassList();
+
+  const { filterParams, onFilterGlassList } = useFilter();
 
   const fetchMore = useCallback(
     async (page: number): Promise<void> => {
@@ -26,15 +29,18 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
         return;
       }
 
-      await getGlassList(
+      // TODO move glassList data to context API instead of callback
+      await onFilterGlassList(
         categorySlug,
         {
-          'page[number]': page,
+          ...filterParams,
+          page,
         },
+        getGlassList,
         true
       );
     },
-    [categorySlug, getGlassList]
+    [categorySlug, filterParams, getGlassList, onFilterGlassList]
   );
 
   const { lastElementRef, resetStartPage } = useInfiniteScroll(fetchMore, {
@@ -45,13 +51,28 @@ export const ProductList: FC<Props> = ({ categorySlug }) => {
     const controller = new AbortController();
 
     if (categorySlug) {
-      getGlassList(categorySlug, {}, false, controller);
+      resetStartPage();
+
+      // TODO move glassList data to context API instead of callback
+      onFilterGlassList(
+        categorySlug,
+        filterParams,
+        getGlassList,
+        false,
+        controller
+      );
     }
 
     return () => {
       controller.abort();
     };
-  }, [categorySlug, getGlassList]);
+  }, [
+    categorySlug,
+    getGlassList,
+    filterParams,
+    onFilterGlassList,
+    resetStartPage,
+  ]);
 
   useEffect(() => {
     if (categorySlug) {

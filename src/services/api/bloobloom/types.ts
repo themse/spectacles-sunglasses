@@ -61,6 +61,9 @@ export type GlassItemPathObj = {
 export type FilterCriteria = Partial<{
   'page[limit]': number;
   'page[number]': number;
+  'filters[glass_variant_frame_variant_colour_tag_configuration_names]': string[]; // filter color
+  'filters[glass_variant_frame_variant_frame_tag_configuration_names]': string[]; // filter shape
+
   'sort[type]': string;
   width: number;
   'sort[order]': string;
