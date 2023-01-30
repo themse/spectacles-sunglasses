@@ -32,7 +32,6 @@ const Content = styled.div`
   padding: ${pxToRem(15)};
   z-index: 99;
   border: 1px solid ${(props): string => props.theme.colors.dark};
-  border-top: none;
-  margin-top: 1px;
+  margin-top: 0;
   margin-left: -1px;
 `;
